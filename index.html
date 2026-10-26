@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Assistant CDL Expertises – Registre de nuisances</title>
-<meta name="description" content="Posez vos questions sur le registre de nuisances clé en main de CDL Expertises : fonctionnement, protection des données, offres pour collectivités et exploitants ICPE.">
+<meta name="description" content="Posez vos questions sur le registre de nuisances clé en main de CDL Expertises : fonctionnement, protection des données, offres pour collectivités, exploitants ICPE et associations de défense de l'environnement.">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Assistant CDL Expertises">
-<meta property="og:description" content="Questions sur le registre de nuisances clé en main pour collectivités et exploitants ICPE.">
+<meta property="og:description" content="Questions sur le registre de nuisances clé en main pour collectivités, exploitants ICPE et associations de défense de l'environnement.">
 <meta property="og:type" content="website">
 <link rel="icon" href="logo-cdl-expertises.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600&family=Source+Sans+3:wght@400;600&display=swap">
 <style>
-:root{--paper:#f5f8f7;--surface:#fff;--ink:#10201c;--muted:#52625e;--line:#d6e1dd;--accent:#009881;--accent-ink:#fff;--soft:#e3f3ef;
+:root{--paper:#f6f7f8;--surface:#fff;--ink:#0e1a17;--muted:#5b6770;--line:#e6e9eb;--accent:#009881;--accent-ink:#fff;--soft:#e6f5f1;
 --fd:"Lexend","Segoe UI",system-ui,sans-serif;--fb:"Source Sans 3","Segoe UI",system-ui,sans-serif}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
@@ -69,7 +69,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
     if(!v){v=(crypto.randomUUID?crypto.randomUUID():Date.now()+""+Math.random());try{sessionStorage.setItem(k,v)}catch(e){}}return v}
   var log=document.getElementById("log"),f=document.getElementById("f"),q=document.getElementById("q");
   function add(t,c){var d=document.createElement("div");d.className="msg "+c;d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
-  add("Bonjour, je réponds à vos questions sur le registre de nuisances clé en main : fonctionnement, protection des données, offres. Vous représentez une collectivité ou un exploitant ?","bot");
+  add("Bonjour, je réponds à vos questions sur le registre de nuisances clé en main : fonctionnement, protection des données, offres. Vous représentez une collectivité, un exploitant ou une association ?","bot");
   function send(t){ add(t,"me"); var w=add("L'assistant rédige sa réponse…","bot typing");
     fetch(HOOK,{method:"POST",body:new URLSearchParams({type:"chat",session:sid(),page:location.href,message:t})})
     .then(function(r){if(!r.ok)throw 0;return r.text()})
