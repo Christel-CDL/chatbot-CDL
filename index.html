@@ -36,7 +36,9 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;
   padding:10px max(16px,env(safe-area-inset-right)) 10px max(16px,env(safe-area-inset-left));
   padding-top:calc(10px + env(safe-area-inset-top));
   background:rgba(255,255,255,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(227,233,236,.8)}
-header img{height:40px;width:auto;display:block}
+header img{height:34px;width:auto;display:block}
+.brand{display:flex;align-items:center;gap:10px;background:none!important;padding:0!important;color:var(--muted)!important;font:500 .8rem var(--fd)!important}
+@media (max-width:420px){.brand span{display:none}}
 header a{font:500 .9rem var(--fd);color:var(--accent);text-decoration:none;background:var(--soft);padding:.45rem .8rem;border-radius:999px}
 main{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:780px;margin:0 auto;padding:14px 12px 0}
 .card{flex:1;min-height:0;display:flex;flex-direction:column;background:rgba(255,255,255,.82);border:1px solid rgba(227,233,236,.9);
@@ -91,7 +93,7 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
 </head>
 <body>
 <header>
-  <img src="logo-cdl-expertises.png" alt="CDL Expertises" width="111" height="40">
+  <a class="brand" href="#" aria-label="Signaline"><img src="img/signaline-logo.svg" alt="Signaline" height="34"><span>par CDL Expertises</span></a>
   <a id="back" href="#">← Retour au site</a>
 </header>
 <main>
