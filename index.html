@@ -9,35 +9,79 @@
 <meta property="og:title" content="Assistant CDL Expertises">
 <meta property="og:description" content="Questions sur le registre de nuisances clé en main pour collectivités, exploitants ICPE et associations de défense de l'environnement.">
 <meta property="og:type" content="website">
+<meta name="theme-color" content="#eaf6f3">
 <link rel="icon" href="logo-cdl-expertises.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap">
 <style>
-:root{--paper:#f6f7f8;--surface:#fff;--ink:#0e1a17;--muted:#5b6770;--line:#e6e9eb;--accent:#009881;--accent-ink:#fff;--soft:#e6f5f1;
---fd:"Lexend","Segoe UI",system-ui,sans-serif;--fb:"Source Sans 3","Segoe UI",system-ui,sans-serif}
+:root{
+  --ink:#13302a; --text:#2c3a40; --muted:#62707a; --line:#e3e9ec; --surface:#ffffff;
+  --accent:#009881; --accent-2:#2bb8a0; --accent-ink:#fff; --soft:#e8f6f2; --sky:#e7f1fb; --peach:#fdf1e8;
+  --fd:"Lexend","Segoe UI",system-ui,sans-serif; --fb:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
-body{background:var(--paper);color:var(--ink);font:400 17px/1.55 var(--fb);display:flex;flex-direction:column}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(16px,env(safe-area-inset-right)) 10px max(16px,env(safe-area-inset-left));padding-top:calc(10px + env(safe-area-inset-top));background:var(--surface);border-bottom:1px solid var(--line)}
-header img{height:40px;width:auto}
-header a{font:500 .9rem var(--fd);color:var(--accent);text-decoration:none}
-main{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:760px;margin:0 auto}
-.intro{padding:18px 16px 4px}
-.intro h1{font:600 1.35rem/1.2 var(--fd);margin:0 0 6px}
-.intro p{margin:0;color:var(--muted);font-size:.95rem}
-.chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px}
-.chips button{font:500 .85rem var(--fd);background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:.45rem .8rem;cursor:pointer}
-#log{flex:1;min-height:0;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
-.msg{max-width:86%;padding:10px 13px;border-radius:12px;white-space:pre-wrap;overflow-wrap:anywhere}
-.bot{align-self:flex-start;background:var(--soft);border-bottom-left-radius:4px}
-.me{align-self:flex-end;background:var(--surface);border:1px solid var(--line);border-bottom-right-radius:4px}
-.typing{opacity:.7;font-style:italic}
-.note{font-size:.78rem;color:var(--muted);padding:0 16px 6px}
-form{display:flex;gap:8px;padding:10px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--surface)}
-input{flex:1;min-width:0;font:inherit;border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem;color:var(--ink);background:var(--paper)}
-form button{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:0 18px;font:600 .95rem var(--fd);cursor:pointer}
-button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+body{
+  color:var(--text);font:400 17px/1.55 var(--fb);display:flex;flex-direction:column;
+  background:#f4f8f9;
+  background-image:
+    radial-gradient(60% 45% at 100% 0%, rgba(43,184,160,.22) 0%, rgba(244,248,249,0) 70%),
+    radial-gradient(55% 40% at 0% 100%, rgba(120,170,230,.20) 0%, rgba(244,248,249,0) 70%),
+    radial-gradient(40% 30% at 10% 10%, rgba(253,214,186,.35) 0%, rgba(244,248,249,0) 70%);
+  background-attachment:fixed;
+}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px max(16px,env(safe-area-inset-right)) 10px max(16px,env(safe-area-inset-left));
+  padding-top:calc(10px + env(safe-area-inset-top));
+  background:rgba(255,255,255,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(227,233,236,.8)}
+header img{height:40px;width:auto;display:block}
+header a{font:500 .9rem var(--fd);color:var(--accent);text-decoration:none;background:var(--soft);padding:.45rem .8rem;border-radius:999px}
+main{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:780px;margin:0 auto;padding:14px 12px 0}
+.card{flex:1;min-height:0;display:flex;flex-direction:column;background:rgba(255,255,255,.82);border:1px solid rgba(227,233,236,.9);
+  border-radius:22px 22px 0 0;box-shadow:0 24px 60px -30px rgba(19,48,42,.28);overflow:hidden}
+.intro{display:flex;gap:14px;align-items:center;padding:18px 18px 10px;background:linear-gradient(120deg,var(--soft) 0%,var(--sky) 60%,var(--peach) 100%)}
+.avatar{flex:none;width:54px;height:54px;border-radius:50%;background:linear-gradient(140deg,#2bb8a0,#5fa8e6);display:grid;place-items:center;
+  box-shadow:0 6px 16px -6px rgba(0,152,129,.6);position:relative;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.avatar svg{width:30px;height:30px}
+.intro .online{position:absolute;right:2px;bottom:2px;width:12px;height:12px;border-radius:50%;background:#3ccf7a;border:2px solid #fff}
+.intro .wrap-av{position:relative;flex:none}
+.intro h1{font:600 1.25rem/1.2 var(--fd);margin:0 0 3px;color:var(--ink)}
+.intro p{margin:0;color:var(--muted);font-size:.93rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px 6px}
+.chips button{font:500 .85rem var(--fd);background:#fff;color:var(--ink);border:1px solid #cfe9e2;border-radius:999px;padding:.5rem .85rem;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease,transform .15s ease}
+.chips button:hover{background:var(--soft);border-color:var(--accent-2);transform:translateY(-1px)}
+#log{flex:1;min-height:0;overflow-y:auto;padding:12px 18px 16px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+.row{display:flex;gap:10px;align-items:flex-end}
+.row.me{justify-content:flex-end}
+.mini{flex:none;width:30px;height:30px;border-radius:50%;background:linear-gradient(140deg,#2bb8a0,#5fa8e6);display:grid;place-items:center;overflow:hidden}
+.mini img{width:100%;height:100%;object-fit:cover}
+.mini svg{width:17px;height:17px}
+.msg{max-width:80%;padding:11px 14px;border-radius:18px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.98rem}
+.bot .msg{background:#fff;border:1px solid var(--line);border-bottom-left-radius:6px;box-shadow:0 6px 18px -12px rgba(19,48,42,.25);color:var(--text)}
+.me .msg{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-bottom-right-radius:6px;box-shadow:0 8px 18px -12px rgba(0,152,129,.7)}
+.msg a{color:var(--accent);font-weight:600}
+.typing .msg{color:var(--muted)}
+.dots{display:inline-flex;gap:4px;vertical-align:middle}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--accent-2);opacity:.35;animation:b 1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+.note{font-size:.78rem;color:var(--muted);padding:0 18px 8px;margin:0}
+form{display:flex;gap:8px;align-items:center;margin:0 18px 0;padding:8px 8px 8px 16px;background:#fff;border:1px solid var(--line);border-radius:999px;
+  box-shadow:0 10px 24px -18px rgba(19,48,42,.4)}
+.formwrap{padding:0 0 calc(14px + env(safe-area-inset-bottom))}
+input{flex:1;min-width:0;font:inherit;border:0;outline:0;padding:.55rem 0;color:var(--ink);background:transparent}
+form button{flex:none;width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;box-shadow:0 8px 18px -10px rgba(0,152,129,.8)}
+form button svg{width:20px;height:20px}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--accent-2);outline-offset:2px}
+form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,160,.15)}
 .hp{position:absolute;left:-9999px}
+@media (max-width:520px){main{padding:8px 0 0}.card{border-radius:0;border-left:0;border-right:0}.msg{max-width:86%}
+  .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chips button{flex:none}
+  .intro{padding:14px 16px 10px}.intro p{font-size:.85rem}.intro h1{font-size:1.1rem}.avatar{width:46px;height:46px}}
+@media (prefers-reduced-motion:reduce){.dots i{animation:none}.chips button{transition:none}}
 </style>
 </head>
 <body>
@@ -46,36 +90,60 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
   <a id="back" href="#">← Retour au site</a>
 </header>
 <main>
+ <div class="card">
   <div class="intro">
-    <h1>Assistant « Registre de nuisances »</h1>
-    <p>Réponses générées par IA à partir de notre FAQ. Pour un projet précis, laissez vos coordonnées : nous vous recontactons.</p>
+    <div class="wrap-av"><div class="avatar" id="av"></div><span class="online" aria-hidden="true"></span></div>
+    <div>
+      <h1>Assistant « Registre de nuisances »</h1>
+      <p>Réponses générées par IA à partir de notre FAQ. Pour un projet précis, laissez vos coordonnées : nous vous recontactons.</p>
+    </div>
   </div>
   <div class="chips" aria-label="Questions fréquentes">
     <button type="button">Comment fonctionne le registre ?</button>
     <button type="button">Les données des riverains sont-elles protégées ?</button>
+    <button type="button">Pour quelles installations ?</button>
     <button type="button">Combien coûte le service ?</button>
     <button type="button">Je suis riverain, que faire ?</button>
   </div>
   <div id="log" aria-live="polite"></div>
   <p class="note">Ne saisissez pas de données sensibles. Les échanges sont enregistrés pour améliorer nos réponses. En cas de danger immédiat, appelez le 112.</p>
-  <form id="f"><label class="hp" for="q">Votre message</label><input id="q" maxlength="600" placeholder="Posez votre question…" autocomplete="off" required><button type="submit">Envoyer</button></form>
+  <div class="formwrap">
+   <form id="f"><label class="hp" for="q">Votre message</label><input id="q" maxlength="600" placeholder="Posez votre question…" autocomplete="off" required>
+    <button type="submit" aria-label="Envoyer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button></form>
+  </div>
+ </div>
 </main>
 <script>
 (function(){
   var HOOK="https://hook.eu2.make.com/7ygw66mlbwj5bhqakqxqu63rvfh3qfct";
-  var ref=document.referrer; var back=document.getElementById("back");
+  /* Avatar : img/avatar.png s'il existe, sinon pictogramme */
+  var ICON='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><path d="M9.5 10.5c.8-.9 1.6-.9 2.5 0s1.7.9 2.5 0"/></svg>';
+  var AVATAR="img/avatar.png", hasAvatar=false;
+  function fillAv(el){ el.innerHTML=hasAvatar?'<img src="'+AVATAR+'" alt="">':ICON; }
+  var av=document.getElementById("av"); fillAv(av);
+  var t=new Image(); t.onload=function(){hasAvatar=true; fillAv(av); document.querySelectorAll(".mini").forEach(fillAv);}; t.src=AVATAR;
+
+  var ref=document.referrer, back=document.getElementById("back");
   try{ var p=new URLSearchParams(location.search).get("retour"); if(p&&/^https:\/\//.test(p)) back.href=p; else if(ref) back.href=ref; else back.hidden=true; }catch(e){ back.hidden=true; }
   function sid(){var k="cdl-chat-session",v=null;try{v=sessionStorage.getItem(k)}catch(e){}
-    if(!v){v=(crypto.randomUUID?crypto.randomUUID():Date.now()+""+Math.random());try{sessionStorage.setItem(k,v)}catch(e){}}return v}
+    if(!v){v=(window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now()+""+Math.random());try{sessionStorage.setItem(k,v)}catch(e){}}return v}
   var log=document.getElementById("log"),f=document.getElementById("f"),q=document.getElementById("q");
-  function add(t,c){var d=document.createElement("div");d.className="msg "+c;d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
-  add("Bonjour, je réponds à vos questions sur le registre de nuisances clé en main : fonctionnement, protection des données, offres. Vous représentez une collectivité, un exploitant ou une association ?","bot");
-  function send(t){ add(t,"me"); var w=add("L'assistant rédige sa réponse…","bot typing");
-    fetch(HOOK,{method:"POST",body:new URLSearchParams({type:"chat",session:sid(),page:location.href,message:t})})
+  /* Texte sûr : liens https rendus cliquables sans injecter de HTML */
+  function setText(el,txt){ el.textContent=""; var re=/(https:\/\/[^\s)]+)/g, i=0, m;
+    while((m=re.exec(txt))){ el.appendChild(document.createTextNode(txt.slice(i,m.index)));
+      var a=document.createElement("a"); a.href=m[1].replace(/[.,;:]$/,""); a.textContent=a.href; a.target="_blank"; a.rel="noopener"; el.appendChild(a); i=m.index+m[1].length; }
+    el.appendChild(document.createTextNode(txt.slice(i))); }
+  function add(txt,who){ var r=document.createElement("div"); r.className="row "+who;
+    if(who!=="me"){ var mi=document.createElement("div"); mi.className="mini"; fillAv(mi); r.appendChild(mi); }
+    var d=document.createElement("div"); d.className="msg"; if(txt) setText(d,txt); r.appendChild(d);
+    log.appendChild(r); log.scrollTop=log.scrollHeight; return {row:r,msg:d}; }
+  add("Bonjour ! Je réponds à vos questions sur le registre de nuisances clé en main : fonctionnement, installations concernées, protection des données, offres. Vous représentez une collectivité, un exploitant ou une association ?","bot");
+  function send(txt){ add(txt,"me"); var w=add("","bot typing"); w.msg.innerHTML='<span class="dots" aria-label="L’assistant rédige sa réponse"><i></i><i></i><i></i></span>';
+    fetch(HOOK,{method:"POST",body:new URLSearchParams({type:"chat",session:sid(),page:location.href,message:txt})})
     .then(function(r){if(!r.ok)throw 0;return r.text()})
-    .then(function(x){w.className="msg bot";w.textContent=x||"Je n'ai pas pu répondre. Utilisez le formulaire de contact du site."})
-    .catch(function(){w.className="msg bot";w.textContent="L'assistant est momentanément indisponible. Réessayez dans un instant ou utilisez le formulaire de contact."}); }
-  f.addEventListener("submit",function(e){e.preventDefault();var t=q.value.trim();if(!t)return;q.value="";send(t)});
+    .then(function(x){w.row.className="row bot"; setText(w.msg, x||"Je n'ai pas pu répondre. Utilisez le formulaire de contact du site."); log.scrollTop=log.scrollHeight;})
+    .catch(function(){w.row.className="row bot"; setText(w.msg,"L'assistant est momentanément indisponible. Réessayez dans un instant ou utilisez le formulaire de contact.");}); }
+  f.addEventListener("submit",function(e){e.preventDefault();var v=q.value.trim();if(!v)return;q.value="";send(v)});
   document.querySelectorAll(".chips button").forEach(function(b){b.addEventListener("click",function(){send(b.textContent)})});
   q.focus();
 })();
