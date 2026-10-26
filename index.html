@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Signalo – assistant du registre numérique de signalement de nuisance | CDL Expertises</title>
-<meta name="description" content="Posez vos questions sur le registre numérique de signalement de nuisance, l'espace sécurisé d'échanges entre riverains et exploitant proposé par CDL Expertises : fonctionnement, protection des données, offres pour collectivités, exploitants ICPE et associations de défense de l'environnement.">
+<title>Signalo – l'assistant de Signaline | CDL Expertises</title>
+<meta name="description" content="Posez vos questions sur Signaline, le registre numérique de signalement de nuisance, l'espace sécurisé d'échanges entre riverains et exploitant proposé par CDL Expertises : fonctionnement, protection des données, offres pour collectivités, exploitants ICPE et associations de défense de l'environnement.">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Signalo – l'assistant de CDL Expertises">
 <meta property="og:description" content="Questions sur le registre numérique de signalement de nuisance, pour collectivités, exploitants ICPE et associations de défense de l'environnement.">
@@ -100,7 +100,7 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
     <div class="wrap-av"><div class="avatar" id="av"></div><span class="online" aria-hidden="true"></span></div>
     <div>
       <h1>Signalo</h1>
-      <p>L'assistant du registre numérique de signalement de nuisance. Réponses générées par IA à partir de notre FAQ ; pour un projet précis, laissez vos coordonnées.</p>
+      <p>L'assistant de Signaline, le registre numérique de signalement de nuisance. Réponses générées par IA à partir de notre FAQ ; pour un projet précis, laissez vos coordonnées.</p>
     </div>
   </div>
   <div class="chips" aria-label="Questions fréquentes">
@@ -142,7 +142,7 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
     if(who!=="me"){ var mi=document.createElement("div"); mi.className="mini"; fillAv(mi); r.appendChild(mi); }
     var d=document.createElement("div"); d.className="msg"; if(txt) setText(d,txt); r.appendChild(d);
     log.appendChild(r); log.scrollTop=log.scrollHeight; return {row:r,msg:d}; }
-  add("Bonjour, je suis Signalo ! Je réponds à vos questions sur le registre numérique de signalement de nuisance : fonctionnement, installations concernées, protection des données, offres. Vous représentez une collectivité, un exploitant ou une association ?","bot");
+  add("Bonjour, je suis Signalo ! Je réponds à vos questions sur Signaline, le registre numérique de signalement de nuisance : fonctionnement, installations concernées, protection des données, offres. Vous représentez une collectivité, un exploitant ou une association ?","bot");
   function send(txt){ add(txt,"me"); var w=add("","bot typing"); w.msg.innerHTML='<span class="dots" aria-label="L’assistant rédige sa réponse"><i></i><i></i><i></i></span>';
     fetch(HOOK,{method:"POST",body:new URLSearchParams({type:"chat",session:sid(),page:location.href,message:txt})})
     .then(function(r){if(!r.ok)throw 0;return r.text()})
