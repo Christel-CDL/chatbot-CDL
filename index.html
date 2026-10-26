@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Signalo – l'assistant de Signaline | CDL Expertises</title>
-<meta name="description" content="Posez vos questions sur Signaline, le registre numérique de signalement de nuisance, l'espace sécurisé d'échanges entre riverains et exploitant proposé par CDL Expertises : fonctionnement, protection des données, offres pour collectivités, exploitants ICPE et associations de défense de l'environnement.">
+<title>Signalo – l'assistant de Signaligne | CDL Expertises</title>
+<meta name="description" content="Posez vos questions sur Signaligne, le registre numérique de signalement de nuisance, l'espace sécurisé d'échanges entre riverains et exploitant proposé par CDL Expertises : fonctionnement, protection des données, offres pour collectivités, exploitants ICPE et associations de défense de l'environnement.">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Signalo – l'assistant de CDL Expertises">
 <meta property="og:description" content="Questions sur le registre numérique de signalement de nuisance, pour collectivités, exploitants ICPE et associations de défense de l'environnement.">
@@ -93,7 +93,7 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
 </head>
 <body>
 <header>
-  <a class="brand" href="#" aria-label="Signaline"><img src="img/signaline-logo.svg" alt="Signaline" height="34"><span>par CDL Expertises</span></a>
+  <a class="brand" href="#" aria-label="Signaligne"><img src="img/signaligne-logo.svg" alt="Signaligne" height="34"><span>par CDL Expertises</span></a>
   <a id="back" href="#">← Retour au site</a>
 </header>
 <main>
@@ -102,7 +102,7 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
     <div class="wrap-av"><div class="avatar" id="av"></div><span class="online" aria-hidden="true"></span></div>
     <div>
       <h1>Signalo</h1>
-      <p>L'assistant de Signaline, le registre numérique de signalement de nuisance. Réponses générées par IA à partir de notre FAQ ; pour un projet précis, laissez vos coordonnées.</p>
+      <p>L'assistant de Signaligne, le registre numérique de signalement de nuisance. Réponses générées par IA à partir de notre FAQ ; pour un projet précis, laissez vos coordonnées.</p>
     </div>
   </div>
   <div class="chips" aria-label="Questions fréquentes">
@@ -113,7 +113,7 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
     <button type="button">Je suis riverain, que faire ?</button>
   </div>
   <div id="log" aria-live="polite"></div>
-  <p class="note">Ne saisissez pas de données sensibles. Les échanges sont enregistrés pour améliorer nos réponses.</p>
+  <p class="note">Ne saisissez pas de données sensibles. Les échanges sont enregistrés par CDL Expertises pour répondre et améliorer les réponses (conservation 3 ans au plus). <a href="https://cdl-expertises---registre-nuisances.webflow.io/mentions-legales#confidentialite" target="_blank" rel="noopener">Confidentialité et mentions légales</a></p>
   <div class="formwrap">
    <form id="f"><label class="hp" for="q">Votre message</label><input id="q" maxlength="600" placeholder="Posez votre question…" autocomplete="off" required>
     <button type="submit" aria-label="Envoyer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button></form>
@@ -144,7 +144,7 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
     if(who!=="me"){ var mi=document.createElement("div"); mi.className="mini"; fillAv(mi); r.appendChild(mi); }
     var d=document.createElement("div"); d.className="msg"; if(txt) setText(d,txt); r.appendChild(d);
     log.appendChild(r); log.scrollTop=log.scrollHeight; return {row:r,msg:d}; }
-  add("Bonjour, je suis Signalo ! Je réponds à vos questions sur Signaline, le registre numérique de signalement de nuisance : fonctionnement, installations concernées, protection des données, offres. Vous représentez une collectivité, un exploitant ou une association ?","bot");
+  add("Bonjour, je suis Signalo ! Je réponds à vos questions sur Signaligne, le registre numérique de signalement de nuisance : fonctionnement, installations concernées, protection des données, offres. Vous représentez une collectivité, un exploitant ou une association ?","bot");
   function send(txt){ add(txt,"me"); var w=add("","bot typing"); w.msg.innerHTML='<span class="dots" aria-label="L’assistant rédige sa réponse"><i></i><i></i><i></i></span>';
     fetch(HOOK,{method:"POST",body:new URLSearchParams({type:"chat",session:sid(),page:location.href,message:txt})})
     .then(function(r){if(!r.ok)throw 0;return r.text()})
