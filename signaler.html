@@ -81,7 +81,7 @@ footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
     if (!code) { show("Choisissez d'abord le site concerné."); select.focus(); return false; }
     var url = FORM + "?site=" + encodeURIComponent(SITES[code].id);
     if (gps) url += "&coordonneesGps=" + encodeURIComponent(gps);
-    location.href = url;
+    location.replace(url);
     return true;
   }
 
