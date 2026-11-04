@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Signaler une nuisance – Signaligne</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="img/signaligne-icone-32.png">
-<link rel="apple-touch-icon" href="img/signaligne-apple-touch-180.png">
+<link rel="icon" href="img/signalo-icone-32.png">
+<link rel="apple-touch-icon" href="img/signalo-apple-touch-180.png">
 <link rel="manifest" id="manifest" href="manifest-demo.webmanifest">
 <script>/* un manifeste par site : manifest-<code>.webmanifest */(function(){var c=new URLSearchParams(location.search).get("site");if(c&&/^[a-z0-9-]+$/.test(c))document.getElementById("manifest").href="manifest-"+c+".webmanifest";})();</script>
 <meta name="theme-color" content="#009881">
-<meta name="apple-mobile-web-app-title" content="Signaligne">
-<meta name="application-name" content="Signaligne">
+<meta name="apple-mobile-web-app-title" content="Signalo">
+<meta name="application-name" content="Signalo">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap">
 <style>
 :root{--ink:#13302a;--text:#2c3a40;--muted:#62707a;--line:#e3e9ec;--surface:#fff;--bg:#f4f7f6;--accent:#009881;--accent-ink:#fff;--soft:#e8f6f2;--warn:#fdf1e8}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--text);font:17px/1.55 "Source Sans 3",Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px}
 .logo{height:40px;margin:8px 0 20px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 24px;max-width:480px;width:100%}
@@ -33,9 +34,14 @@ select{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-
 .note{font-size:14px;color:var(--muted);background:var(--soft);border-radius:10px;padding:12px 14px;margin-top:20px}
 .msg{display:none;background:var(--warn);border-radius:10px;padding:12px 14px;margin:14px 0 0;font-size:15px}
 a{color:var(--accent)}
-.install{margin-top:16px;font-size:15px}
-.install summary{cursor:pointer;color:var(--ink);font-weight:600}
-.install ul{margin:8px 0 0;padding-left:20px}
+.install{margin-top:22px;border:1px solid var(--line);border-radius:14px;padding:16px;font-size:15px;background:#fbfcfc}
+.install-head{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.install-head img{border-radius:12px;flex:none}
+.install-title{font:600 16px/1.3 Lexend,Arial,sans-serif;color:var(--ink);margin:0 0 2px}
+.install-sub{margin:0;color:var(--muted);font-size:14px}
+.how{margin:10px 0 0}
+.ico{display:inline-block;border:1px solid var(--muted);border-radius:4px;padding:0 4px;font-size:13px}
+.btn-install{background:var(--ink);color:#fff;font-size:15px;padding:12px 14px}
 footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
 </style>
 </head>
@@ -52,14 +58,13 @@ footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
   <button class="btn btn-main" id="go">Partager ma position et continuer</button>
   <button class="btn btn-alt" id="skip">Continuer sans ma position</button>
   <p class="msg" id="msg" role="status"></p>
-  <details class="install" id="install">
-    <summary>📲 Ajouter Signaligne sur mon téléphone</summary>
-    <p style="margin:8px 0 0">Une icône sur votre écran d'accueil vous ramène directement ici pour vos prochains signalements.</p>
-    <ul>
-      <li><b>iPhone (Safari)</b> : bouton Partager <span aria-hidden="true">⬆️</span>, puis « Sur l'écran d'accueil ».</li>
-      <li><b>Android (Chrome)</b> : menu <span aria-hidden="true">⋮</span>, puis « Ajouter à l'écran d'accueil » ou « Installer l'application ».</li>
-    </ul>
-  </details>
+  <section class="install" id="install" aria-labelledby="installTitle">
+    <div class="install-head"><img src="img/signalo-icone-192.png" alt="" width="52" height="52"><div><p class="install-title" id="installTitle">Gardez Signalo sur votre téléphone</p><p class="install-sub">Une icône sur l'écran d'accueil pour vos prochains signalements.</p></div></div>
+    <button class="btn btn-install" id="installBtn" hidden>Ajouter l'icône sur mon écran d'accueil</button>
+    <p class="how" id="howInApp" hidden><b>Ouvrez d'abord cette page dans votre navigateur</b> (vous êtes dans l'aperçu d'une application, par exemple votre messagerie) : touchez le menu <b>⋯</b> ou <b>⋮</b> puis « Ouvrir dans Safari » ou « Ouvrir dans Chrome ».</p>
+    <p class="how" id="howIos" hidden><b>Sur iPhone, dans Safari :</b> touchez le bouton Partager <span class="ico" aria-hidden="true">⬆</span> en bas de l'écran, faites défiler puis choisissez <b>« Sur l'écran d'accueil »</b>, et validez avec <b>Ajouter</b>.</p>
+    <p class="how" id="howAndroid" hidden><b>Sur Android, dans Chrome :</b> touchez le menu <b>⋮</b> en haut à droite puis <b>« Ajouter à l'écran d'accueil »</b> (ou « Installer l'application »), et validez.</p>
+  </section>
   <p class="note">Votre position est arrondie à une dizaine de mètres et sert uniquement à rattacher le signalement au lieu de perception. Elle n'est utilisée qu'une fois, au moment de l'envoi : aucun suivi de vos déplacements. <a href="https://cdl-expertises---registre-nuisances.webflow.io/mentions-legales#confidentialite">Confidentialité</a></p>
 </main>
 <footer>Registre numérique de signalement de nuisance – CDL Expertises</footer>
@@ -71,7 +76,26 @@ footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
   };
   var FORM = "https://form.jotform.com/262975652562064";
 
-  try { if (window.matchMedia("(display-mode: minimal-ui), (display-mode: standalone)").matches || navigator.standalone) document.getElementById("install").hidden = true; } catch(e) {}
+  // Aide à l'ajout sur l'écran d'accueil
+  (function(){
+    var box = document.getElementById("install");
+    var installe = false;
+    try { installe = window.matchMedia("(display-mode: minimal-ui), (display-mode: standalone)").matches || navigator.standalone === true; } catch(e) {}
+    if (installe) { box.hidden = true; return; }
+    var ua = navigator.userAgent || "";
+    var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    var android = /Android/.test(ua);
+    var inApp = /FBAN|FBAV|Instagram|Line\/|GSA\/|LinkedInApp|Twitter|; wv\)|GmailApp|Outlook/i.test(ua) || (ios && !/Safari\//.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua));
+    if (inApp) document.getElementById("howInApp").hidden = false;
+    if (ios) document.getElementById("howIos").hidden = false;
+    else if (android) document.getElementById("howAndroid").hidden = false;
+    else { document.getElementById("howIos").hidden = false; document.getElementById("howAndroid").hidden = false; }
+    var differe = null, btn = document.getElementById("installBtn");
+    window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); differe = e; btn.hidden = false; });
+    btn.addEventListener("click", function(){ if (!differe) return; differe.prompt(); differe.userChoice.then(function(){ differe = null; btn.hidden = true; }); });
+    window.addEventListener("appinstalled", function(){ box.hidden = true; });
+    if ("serviceWorker" in navigator) { try { navigator.serviceWorker.register("sw.js"); } catch(e) {} }
+  })();
   var params = new URLSearchParams(location.search);
   var code = params.get("site");
   var codes = Object.keys(SITES);
