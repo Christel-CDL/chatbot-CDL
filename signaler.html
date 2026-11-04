@@ -6,6 +6,12 @@
 <title>Signaler une nuisance – Signaligne</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="img/signaligne-icone-32.png">
+<link rel="apple-touch-icon" href="img/signaligne-apple-touch-180.png">
+<link rel="manifest" id="manifest" href="manifest-demo.webmanifest">
+<script>/* un manifeste par site : manifest-<code>.webmanifest */(function(){var c=new URLSearchParams(location.search).get("site");if(c&&/^[a-z0-9-]+$/.test(c))document.getElementById("manifest").href="manifest-"+c+".webmanifest";})();</script>
+<meta name="theme-color" content="#009881">
+<meta name="apple-mobile-web-app-title" content="Signaligne">
+<meta name="application-name" content="Signaligne">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap">
@@ -27,6 +33,9 @@ select{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-
 .note{font-size:14px;color:var(--muted);background:var(--soft);border-radius:10px;padding:12px 14px;margin-top:20px}
 .msg{display:none;background:var(--warn);border-radius:10px;padding:12px 14px;margin:14px 0 0;font-size:15px}
 a{color:var(--accent)}
+.install{margin-top:16px;font-size:15px}
+.install summary{cursor:pointer;color:var(--ink);font-weight:600}
+.install ul{margin:8px 0 0;padding-left:20px}
 footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
 </style>
 </head>
@@ -43,6 +52,14 @@ footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
   <button class="btn btn-main" id="go">Partager ma position et continuer</button>
   <button class="btn btn-alt" id="skip">Continuer sans ma position</button>
   <p class="msg" id="msg" role="status"></p>
+  <details class="install" id="install">
+    <summary>📲 Ajouter Signaligne sur mon téléphone</summary>
+    <p style="margin:8px 0 0">Une icône sur votre écran d'accueil vous ramène directement ici pour vos prochains signalements.</p>
+    <ul>
+      <li><b>iPhone (Safari)</b> : bouton Partager <span aria-hidden="true">⬆️</span>, puis « Sur l'écran d'accueil ».</li>
+      <li><b>Android (Chrome)</b> : menu <span aria-hidden="true">⋮</span>, puis « Ajouter à l'écran d'accueil » ou « Installer l'application ».</li>
+    </ul>
+  </details>
   <p class="note">Votre position est arrondie à une dizaine de mètres et sert uniquement à rattacher le signalement au lieu de perception. Elle n'est utilisée qu'une fois, au moment de l'envoi : aucun suivi de vos déplacements. <a href="https://cdl-expertises---registre-nuisances.webflow.io/mentions-legales#confidentialite">Confidentialité</a></p>
 </main>
 <footer>Registre numérique de signalement de nuisance – CDL Expertises</footer>
@@ -54,6 +71,7 @@ footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
   };
   var FORM = "https://form.jotform.com/262975652562064";
 
+  try { if (window.matchMedia("(display-mode: minimal-ui), (display-mode: standalone)").matches || navigator.standalone) document.getElementById("install").hidden = true; } catch(e) {}
   var params = new URLSearchParams(location.search);
   var code = params.get("site");
   var codes = Object.keys(SITES);
