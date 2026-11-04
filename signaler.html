@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Signaler une nuisance – Signaligne</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/signaligne-icone-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--ink:#13302a;--text:#2c3a40;--muted:#62707a;--line:#e3e9ec;--surface:#fff;--bg:#f4f7f6;--accent:#009881;--accent-ink:#fff;--soft:#e8f6f2;--warn:#fdf1e8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.55 "Source Sans 3",Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px}
+.logo{height:40px;margin:8px 0 20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 24px;max-width:480px;width:100%}
+h1{font:600 22px/1.3 Lexend,Arial,sans-serif;color:var(--ink);margin:0 0 6px}
+.site{color:var(--accent);font-weight:600;margin:0 0 18px}
+p{margin:0 0 14px}
+label{display:block;font-weight:600;color:var(--ink);margin:0 0 6px}
+select{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff;margin-bottom:18px}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:15px 18px;font:600 17px Lexend,Arial,sans-serif;cursor:pointer;text-align:center;text-decoration:none}
+.btn-main{background:var(--accent);color:var(--accent-ink)}
+.btn-main:disabled{opacity:.6;cursor:wait}
+.btn-alt{background:none;color:var(--ink);text-decoration:underline;font-weight:500;margin-top:8px}
+.note{font-size:14px;color:var(--muted);background:var(--soft);border-radius:10px;padding:12px 14px;margin-top:20px}
+.msg{display:none;background:var(--warn);border-radius:10px;padding:12px 14px;margin:14px 0 0;font-size:15px}
+a{color:var(--accent)}
+footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
+</style>
+</head>
+<body>
+<img class="logo" src="img/signaligne-logo.svg" alt="Signaligne">
+<main class="card">
+  <h1>Signaler une nuisance</h1>
+  <p class="site" id="siteName"></p>
+  <div id="choix" hidden>
+    <label for="siteSelect">À quel site se rattache votre signalement ?</label>
+    <select id="siteSelect"><option value="">Choisir un site…</option></select>
+  </div>
+  <p>Pour situer précisément l'endroit où vous percevez l'odeur ou le bruit, nous vous proposons de partager votre position au moment du signalement. Votre téléphone va vous demander l'autorisation.</p>
+  <button class="btn btn-main" id="go">Partager ma position et continuer</button>
+  <button class="btn btn-alt" id="skip">Continuer sans ma position</button>
+  <p class="msg" id="msg" role="status"></p>
+  <p class="note">Votre position est arrondie à une dizaine de mètres et sert uniquement à rattacher le signalement au lieu de perception. Elle n'est utilisée qu'une fois, au moment de l'envoi : aucun suivi de vos déplacements. <a href="https://cdl-expertises---registre-nuisances.webflow.io/mentions-legales#confidentialite">Confidentialité</a></p>
+</main>
+<footer>Registre numérique de signalement de nuisance – CDL Expertises</footer>
+<script>
+(function(){
+  // Un site = un lien : signaler.html?site=<code>. Ajouter ici chaque nouveau site (id = fiche Airtable de la table Sites).
+  var SITES = {
+    "demo": {nom: "Site démo – Unité de méthanisation (fictive)", id: "recztJsPWnUEhOkOp"}
+  };
+  var FORM = "https://form.jotform.com/262975652562064";
+
+  var params = new URLSearchParams(location.search);
+  var code = params.get("site");
+  var codes = Object.keys(SITES);
+  if (!SITES[code]) code = codes.length === 1 ? codes[0] : null;
+
+  var siteName = document.getElementById("siteName");
+  var choix = document.getElementById("choix");
+  var select = document.getElementById("siteSelect");
+  var msg = document.getElementById("msg");
+  var go = document.getElementById("go");
+
+  if (code) {
+    siteName.textContent = SITES[code].nom;
+  } else {
+    codes.forEach(function(c){
+      var o = document.createElement("option"); o.value = c; o.textContent = SITES[c].nom; select.appendChild(o);
+    });
+    choix.hidden = false;
+    select.addEventListener("change", function(){ code = select.value || null; msg.style.display = "none"; });
+  }
+
+  function show(t){ msg.textContent = t; msg.style.display = "block"; }
+
+  function ouvrir(gps){
+    if (!code) { show("Choisissez d'abord le site concerné."); select.focus(); return false; }
+    var url = FORM + "?site=" + encodeURIComponent(SITES[code].id);
+    if (gps) url += "&gps=" + encodeURIComponent(gps);
+    location.href = url;
+    return true;
+  }
+
+  document.getElementById("skip").addEventListener("click", function(){ ouvrir(""); });
+
+  go.addEventListener("click", function(){
+    if (!code) { ouvrir(""); return; }
+    if (!("geolocation" in navigator)) { show("Votre navigateur ne permet pas la localisation. Vous allez être redirigé vers le formulaire."); setTimeout(function(){ ouvrir(""); }, 1800); return; }
+    go.disabled = true; go.textContent = "Localisation en cours…";
+    navigator.geolocation.getCurrentPosition(function(p){
+      var lat = p.coords.latitude.toFixed(4), lon = p.coords.longitude.toFixed(4);
+      ouvrir(lat + "," + lon);
+    }, function(err){
+      go.disabled = false; go.textContent = "Partager ma position et continuer";
+      show(err.code === 1
+        ? "Vous avez refusé la localisation. Vous pouvez continuer sans votre position : le lieu de perception indiqué dans le formulaire suffira."
+        : "Votre position n'a pas pu être obtenue. Réessayez à l'extérieur ou continuez sans votre position.");
+    }, {enableHighAccuracy: true, timeout: 15000, maximumAge: 60000});
+  });
+})();
+</script>
+</body>
+</html>
