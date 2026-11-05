@@ -88,6 +88,7 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
 @media (max-width:520px){main{padding:8px 0 0}.card{border-radius:0;border-left:0;border-right:0}.msg{max-width:86%}
   .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chips button{flex:none}
   .intro{padding:14px 16px 10px}.intro p{font-size:.85rem}.intro h1{font-size:1.1rem}.avatar{width:46px;height:46px}}
+.gate{margin:0 16px 10px;padding:12px 14px;border:1px solid #e3e9ec;border-radius:12px;background:#f6faf9;font-size:.9rem}.gate label{display:block;margin-bottom:8px;color:#13302a}.gate-row{display:flex;gap:8px}.gate input{flex:1;min-width:0;padding:10px;border:1px solid #cfd8dc;border-radius:8px;font:inherit}.gate button{border:0;border-radius:8px;padding:10px 14px;background:#009881;color:#fff;font:inherit;font-weight:600;cursor:pointer}.gate-err{color:#b4441c;margin:8px 0 0;font-size:.85rem}[hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){.dots i{animation:none}.chips button{transition:none}}
 </style>
 </head>
@@ -112,6 +113,7 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
     <button type="button">Combien coûte le service ?</button>
     <button type="button">Je suis riverain, que faire ?</button>
   </div>
+  <form id="gate" class="gate"><label for="gm">Démonstration réservée à l'équipe Alegria : indiquez votre adresse e-mail professionnelle pour discuter avec Signalo.</label><div class="gate-row"><input id="gm" type="email" required placeholder="prenom.nom@alegria.group" autocomplete="email"><button type="submit">Valider</button></div><p class="gate-err" id="gerr" hidden>Cette démonstration est réservée aux adresses @alegria.group, @alegria.academy et @alegria.tech.</p></form>
   <div id="log" aria-live="polite"></div>
   <p class="note">Ne saisissez pas de données sensibles. Les échanges sont enregistrés par CDL Expertises pour répondre et améliorer les réponses (conservation 3 ans au plus). <a href="https://cdl-expertises---registre-nuisances.webflow.io/mentions-legales#confidentialite" target="_blank" rel="noopener">Confidentialité et mentions légales</a></p>
   <div class="formwrap">
@@ -135,6 +137,14 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
   function sid(){var k="cdl-chat-session",v=null;try{v=sessionStorage.getItem(k)}catch(e){}
     if(!v){v=(window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now()+""+Math.random());try{sessionStorage.setItem(k,v)}catch(e){}}return v}
   var log=document.getElementById("log"),f=document.getElementById("f"),q=document.getElementById("q");
+  /* Démo réservée : adresses Alegria (le contrôle réel est fait côté Make) */
+  var OK=/(@(alegria\.(group|academy|tech)|cdl-expertises\.com)|^christel\.lacome@gmail\.com)$/i, EK="cdl-chat-email", email="";
+  try{ email=sessionStorage.getItem(EK)||""; }catch(e){}
+  var gate=document.getElementById("gate"), gm=document.getElementById("gm"), gerr=document.getElementById("gerr");
+  function lock(on){ q.disabled=on; f.querySelector("button").disabled=on; document.querySelectorAll(".chips button").forEach(function(b){b.disabled=on}); gate.hidden=!on; }
+  lock(!OK.test(email));
+  gate.addEventListener("submit",function(e){ e.preventDefault(); var v=gm.value.trim().toLowerCase();
+    if(!OK.test(v)){ gerr.hidden=false; return; } email=v; try{sessionStorage.setItem(EK,v)}catch(e){} gerr.hidden=true; lock(false); q.focus(); });
   /* Texte sûr : liens https rendus cliquables sans injecter de HTML */
   function setText(el,txt){ el.textContent=""; var re=/(https:\/\/[^\s)]+)/g, i=0, m;
     while((m=re.exec(txt))){ el.appendChild(document.createTextNode(txt.slice(i,m.index)));
@@ -146,13 +156,13 @@ form:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(43,184,
     log.appendChild(r); log.scrollTop=log.scrollHeight; return {row:r,msg:d}; }
   add("Bonjour, je suis Signalo ! Je réponds à vos questions sur Signaligne, le registre numérique de signalement de nuisance : fonctionnement, installations concernées, protection des données, offres. Vous représentez une collectivité, un exploitant ou une association ?","bot");
   function send(txt){ add(txt,"me"); var w=add("","bot typing"); w.msg.innerHTML='<span class="dots" aria-label="L’assistant rédige sa réponse"><i></i><i></i><i></i></span>';
-    fetch(HOOK,{method:"POST",body:new URLSearchParams({type:"chat",session:sid(),page:location.href,message:txt})})
+    fetch(HOOK,{method:"POST",body:new URLSearchParams({type:"chat",session:sid(),page:location.href,message:txt,email:email})})
     .then(function(r){if(!r.ok)throw 0;return r.text()})
     .then(function(x){w.row.className="row bot"; setText(w.msg, x||"Je n'ai pas pu répondre. Utilisez le formulaire de contact du site."); log.scrollTop=log.scrollHeight;})
     .catch(function(){w.row.className="row bot"; setText(w.msg,"L'assistant est momentanément indisponible. Réessayez dans un instant ou utilisez le formulaire de contact.");}); }
   f.addEventListener("submit",function(e){e.preventDefault();var v=q.value.trim();if(!v)return;q.value="";send(v)});
   document.querySelectorAll(".chips button").forEach(function(b){b.addEventListener("click",function(){send(b.textContent)})});
-  q.focus();
+  if(!q.disabled) q.focus(); else gm.focus();
 })();
 </script>
 </body>

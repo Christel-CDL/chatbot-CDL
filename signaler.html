@@ -42,6 +42,7 @@ a{color:var(--accent)}
 .how{margin:10px 0 0}
 .ico{display:inline-block;border:1px solid var(--muted);border-radius:4px;padding:0 4px;font-size:13px}
 .btn-install{background:var(--ink);color:#fff;font-size:15px;padding:12px 14px}
+.gate{margin:0 0 16px}.gate input{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px}.gate-help{font-size:13px;color:var(--muted);margin:6px 0 0}
 footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
 </style>
 </head>
@@ -54,6 +55,7 @@ footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
     <label for="siteSelect">À quel site se rattache votre signalement ?</label>
     <select id="siteSelect"><option value="">Choisir un site…</option></select>
   </div>
+  <div class="gate"><label for="gm">Démonstration réservée à l'équipe Alegria : votre adresse e-mail professionnelle</label><input id="gm" type="email" placeholder="prenom.nom@alegria.group" autocomplete="email"><p class="gate-help">Adresses @alegria.group, @alegria.academy ou @alegria.tech. Les signalements envoyés avec une autre adresse ne sont pas traités.</p></div>
   <p>Pour situer précisément l'endroit où vous percevez l'odeur ou le bruit, nous vous proposons de partager votre position au moment du signalement. Votre téléphone va vous demander l'autorisation.</p>
   <button class="btn btn-main" id="go">Partager ma position et continuer</button>
   <button class="btn btn-alt" id="skip">Continuer sans ma position</button>
@@ -119,10 +121,15 @@ footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
 
   function show(t){ msg.textContent = t; msg.style.display = "block"; }
 
+  var OK = /(@(alegria\.(group|academy|tech)|cdl-expertises\.com)|^christel\.lacome@gmail\.com)$/i, gm = document.getElementById("gm");
+  try { gm.value = sessionStorage.getItem("cdl-demo-email") || ""; } catch(e) {}
+  function emailOk(){ var v = gm.value.trim().toLowerCase(); if (OK.test(v)) { try { sessionStorage.setItem("cdl-demo-email", v); } catch(e) {} return v; } show("Indiquez d'abord votre adresse e-mail Alegria (@alegria.group, @alegria.academy ou @alegria.tech)."); gm.focus(); return ""; }
   function ouvrir(gps){
     if (!code) { show("Choisissez d'abord le site concerné."); select.focus(); return false; }
+    var mail = emailOk(); if (!mail) return false;
     var url = FORM + "?site=" + encodeURIComponent(SITES[code].id);
     if (gps) url += "&coordonneesGps=" + encodeURIComponent(gps);
+    url += "&email1=" + encodeURIComponent(mail);
     location.replace(url);
     return true;
   }
@@ -131,6 +138,7 @@ footer{font-size:13px;color:var(--muted);margin-top:18px;text-align:center}
 
   go.addEventListener("click", function(){
     if (!code) { ouvrir(""); return; }
+    if (!emailOk()) return;
     if (!("geolocation" in navigator)) { show("Votre navigateur ne permet pas la localisation. Vous allez être redirigé vers le formulaire."); setTimeout(function(){ ouvrir(""); }, 1800); return; }
     go.disabled = true; go.textContent = "Localisation en cours…";
     navigator.geolocation.getCurrentPosition(function(p){
